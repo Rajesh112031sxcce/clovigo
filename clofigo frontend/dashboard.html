@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Dashboard</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h2 id="welcomeMessage">Welcome!</h2>
+  <p><strong>Username:</strong> <span id="displayUsername"></span></p>
+  <p><strong>Role:</strong> <span id="displayRole"></span></p>
+
+  <button id="logoutBtn">Logout</button>
+
+  <script>
+    $(document).ready(function() {
+      const username = localStorage.getItem("username");
+      const role = localStorage.getItem("role");
+      const access = localStorage.getItem("access");
+
+      // Redirect to login if not authenticated
+      if (!access || !username || !role) {
+        alert("You're not logged in.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      // Display user info
+      $('#welcomeMessage').text(`Welcome, ${role.charAt(0).toUpperCase() + role.slice(1)}!`);
+      $('#displayUsername').text(username);
+      $('#displayRole').text(role.charAt(0).toUpperCase() + role.slice(1));
+
+      // Logout functionality
+      $('#logoutBtn').click(function() {
+        localStorage.clear();
+        alert("Logged out successfully.");
+        window.location.href = "login.html";
+      });
+    });
+  </script>
+</body>
+</html>
