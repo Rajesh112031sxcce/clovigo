@@ -26,6 +26,21 @@
           <div class="card-body">
             <form id="signupForm">
               <div class="mb-3">
+                <label for="first_name" class="form-label">First Name:</label>
+                <input type="text" id="first_name" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name:</label>
+                <input type="text" id="last_name" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
                 <label for="phone_no" class="form-label">Phone Number:</label>
                 <input type="text" id="phone_no" class="form-control" required>
               </div>
@@ -54,7 +69,12 @@
     $('#signupForm').on('submit', function(e) {
       e.preventDefault();
 
+      const firstName = $('#first_name').val();
+      const lastName = $('#last_name').val();
+      const email = $('#email').val();
+      const phoneNo = $('#phone_no').val();
       const username = $('#username').val();
+      const password = $('#password').val();
 
       $.ajax({
         url: 'http://127.0.0.1:8000/api/accounts/signup/customer/',
@@ -62,9 +82,12 @@
         contentType: 'application/json',
         data: JSON.stringify({
           user: {
-            phone_no: $('#phone_no').val(),
+            first_name: firstName,
+            last_name: lastName,
             username: username,
-            password: $('#password').val()
+            email: email,
+            phone_no: phoneNo,
+            password: password
           }
         }),
         success: function(response) {

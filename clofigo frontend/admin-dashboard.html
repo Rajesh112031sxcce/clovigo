@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background: #343a40;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      gap: 20px;
+      justify-content: center;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+      background: #007bff;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .response {
+      margin-top: 10px;
+      font-size: 14px;
+      color: green;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Admin Dashboard</h1>
+</div>
+
+<div class="dashboard">
+  <!-- Admin Dashboard -->
+  <div class="card">
+    <h3>Admin Dashboard</h3>
+    <button onclick="getAdminDashboard()">Get Admin Dashboard</button>
+    <pre class="response" id="adminResp"></pre>
+  </div>
+</div>
+
+<script>
+  const token = localStorage.getItem("access_token");
+
+  // Get Admin Dashboard
+  async function getAdminDashboard() {
+    const responseBox = document.getElementById("adminResp");
+
+    if (!token) {
+      responseBox.innerText = "User not authenticated.";
+      return;
+    }
+
+    responseBox.innerText = "Loading...";
+
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/accounts/admin-dashboard/", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        responseBox.innerText = JSON.stringify(result, null, 2);
+      } else {
+        responseBox.innerText = `Error: ${result.detail || "Failed to fetch admin dashboard."}`;
+      }
+    } catch (err) {
+      responseBox.innerText = `Fetch error: ${err.message}`;
+    }
+  }
+</script>
+
+</body>
+</html>
