@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Orders Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h2 {
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    td {
+      color: #555;
+    }
+    .no-orders {
+      text-align: center;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Admin Orders Dashboard</h2>
+
+  <table id="orders_table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Order Number</th>
+        <th>Customer Name</th>
+        <th>Order Status</th>
+        <th>Payment Status</th>
+        <th>Total Amount</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert("Unauthorized access. Please login.");
+        window.location.href = "admin_login.html";
+        return;
+      }
+
+      fetchOrders(token);
+    });
+
+    function fetchOrders(token) {
+      fetch("http://127.0.0.1:8000/api/accounts/admin/orders/", {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch orders');
+        }
+        return response.json();
+      })
+      .then(data => {
+        const orders = data.orders || [];
+        renderOrders(orders);
+      })
+      .catch(error => {
+        alert(`Error: ${error.message}`);
+      });
+    }
+
+    function renderOrders(orders) {
+      const tbody = document.querySelector("#orders_table tbody");
+      tbody.innerHTML = "";  // Clear the existing rows
+
+      if (orders.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='7' class='no-orders'>No orders found</td></tr>";
+        return;
+      }
+
+      orders.forEach(order => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${order.id}</td>
+          <td>${order.product?.id || '-'}</td>
+          <td>${getCustomerName(order.customer)}</td>
+          <td>${getOrderStatus(order.order_status)}</td>
+          <td>${order.payment_status || 'Not Paid'}</td>
+          <td>${order.total_price}</td>
+          <td>${formatDate(order.created_at)}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function getOrderStatus(status) {
+      switch (status) {
+        case 'P': return 'Pending';
+        case 'D': return 'Delivered';
+        case 'C': return 'Cancelled';
+        default: return 'Unknown';
+      }
+    }
+
+    function getCustomerName(customerId) {
+      // Assuming you have a function or method to retrieve customer names from an ID
+      return `Customer #${customerId}`; // Placeholder, can be replaced by actual name lookup
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString();  // Formats as "MM/DD/YYYY"
+    }
+  </script>
+
+</body>
+</html>
