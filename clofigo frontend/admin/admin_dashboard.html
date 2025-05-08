@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h2, h3 {
+      color: #333;
+    }
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+    nav ul li {
+      display: inline;
+      margin-right: 15px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #007BFF;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    a {
+      color: #007BFF;
+    }
+    button {
+      padding: 4px 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Admin Dashboard</h2>
+
+  <!-- Navigation Links -->
+  <nav>
+    <ul>
+      <li><a href="admin_customers.html">Manage Customers</a></li>
+      <li><a href="admin_delivery_boys.html">Manage Delivery Boys</a></li>
+      <li><a href="admin_sellers.html">Manage Sellers</a></li>
+      <li><a href="admin_profile_view.html">View Profile</a></li>
+      <li><a href="admin_profile_update.html">Update Profile</a></li>
+    </ul>
+  </nav>
+
+  <!-- Sellers List -->
+  <h3>Sellers List</h3>
+  <table id="sellers_table">
+    <thead>
+      <tr>
+        <th>Seller ID</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Email</th>
+        <th>Shop Name</th>
+        <th>GST No</th>
+        <th>PAN No</th>
+        <th>Account No</th>
+        <th>Shop Address</th>
+        <th>GST Expiry</th>
+        <th>GST File</th>
+        <th>PAN File</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- Delivery Boys List -->
+  <h3>Delivery Boys List</h3>
+  <table id="delivery_boys_table">
+    <thead>
+      <tr>
+        <th>Delivery Boy ID</th>
+        <th>Name</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- Customers List -->
+  <h3>Customers List</h3>
+  <table id="customers_table">
+    <thead>
+      <tr>
+        <th>Customer ID</th>
+        <th>First Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Username</th>
+        <th>Status</th>
+        <th>Date Joined</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        window.location.href = 'admin_login.html';
+        return;
+      }
+
+      fetchAndRenderData('sellers', 'sellers_table', 'sellers');
+      fetchAndRenderData('delivery-boys', 'delivery_boys_table', 'delivery_boys');
+      fetchAndRenderData('customers', 'customers_table', 'customers');
+    });
+
+    /**
+     * Fetch data from API and populate the table
+     */
+    function fetchAndRenderData(endpoint, tableId, key) {
+      const token = localStorage.getItem('token');
+
+      fetch(`http://127.0.0.1:8000/api/accounts/admin/${endpoint}/`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      })
+        .then(response => {
+          if (!response.ok) throw new Error(`Failed to fetch ${key}`);
+          return response.json();
+        })
+        .then(data => {
+          const tbody = document.querySelector(`#${tableId} tbody`);
+          tbody.innerHTML = '';
+          const items = data[key] || [];
+
+          items.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = generateRowHTML(key, item);
+            tbody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          alert(`Error: ${error.message}`);
+        });
+    }
+
+    /**
+     * Generate HTML row content based on key
+     */
+    function generateRowHTML(key, item) {
+      if (key === 'sellers') {
+        return `
+          <td>${item.id}</td>
+          <td>${item.user?.first_name || '-'}</td>
+          <td><button onclick="toggleSellerStatus(${item.id}, ${item.is_active})">
+              ${item.is_active ? 'Deactivate' : 'Activate'}
+          </button></td>
+          <td>${item.user?.email || '-'}</td>
+          <td>${item.shop_name || '-'}</td>
+          <td>${item.GST_no || '-'}</td>
+          <td>${item.PAN_no || '-'}</td>
+          <td>${item.account_no || '-'}</td>
+          <td>${item.shop_address_1 || '-'}, ${item.shop_address_2 || '-'}, ${item.shop_landmark || '-'}</td>
+          <td>${item.GST_expiry_date || '-'}</td>
+          <td><a href="${item.file_gst}" target="_blank">GST File</a></td>
+          <td><a href="${item.file_pan}" target="_blank">PAN File</a></td>
+        `;
+      } else if (key === 'delivery_boys') {
+        return `
+          <td>${item.id}</td>
+          <td>${item.user?.first_name || '-'}</td>
+          <td>${item.is_active ? 'Active' : 'Inactive'}</td>
+        `;
+      } else if (key === 'customers') {
+        return `
+          <td>${item.id}</td>
+          <td>${item.user?.first_name || '-'}</td>
+          <td>${item.user?.email || '-'}</td>
+          <td>${item.user?.phone_no || '-'}</td>
+          <td>${item.user?.username || '-'}</td>
+          <td>${item.is_active ? 'Active' : 'Inactive'}</td>
+          <td>${item.user?.date_joined?.split('T')[0] || '-'}</td>
+        `;
+      }
+      return '';
+    }
+
+    /**
+     * Toggle seller's active status
+     */
+    function toggleSellerStatus(sellerId, currentStatus) {
+      const token = localStorage.getItem('token');
+      const action = currentStatus ? 'deactivate' : 'activate';
+
+      fetch(`http://127.0.0.1:8000/api/accounts/admin/seller/${sellerId}/status/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action }),
+      })
+        .then(response => {
+          if (!response.ok) throw new Error('Failed to toggle seller status');
+          alert('Seller status updated successfully.');
+          location.reload();
+        })
+        .catch(error => alert(error.message));
+    }
+  </script>
+
+</body>
+</html>
