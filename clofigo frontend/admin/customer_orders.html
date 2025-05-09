@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Orders</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Customer Order Details</h2>
+        <table class="table table-bordered table-hover" id="orders_table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Product</th>
+                    <th>Actual Price</th>
+                    <th>Discount Price</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <a href="admin_dashboard.html" class="btn btn-secondary mt-3">← Back to Dashboard</a>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'admin_login.html';
+            return;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const customerId = urlParams.get('customer_id');
+
+        if (!customerId) {
+            alert('Customer ID not found.');
+            return;
+        }
+
+        fetchCustomerOrders(customerId, token);
+    });
+
+    async function fetchCustomerOrders(customerId, token) {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/accounts/admin/orders/customer/${customerId}/`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch customer orders');
+            }
+
+            const data = await response.json();
+            const tbody = document.querySelector('#orders_table tbody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center">No orders found for this customer.</td></tr>';
+                return;
+            }
+
+            data.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.id}</td>
+                    <td>${order.product?.product_name || '-'}</td>
+                    <td>${order.product?.actual_price || '-'}</td>
+                    <td>${order.product?.discount_price || '-'}</td>
+                    <td>${order.quantity}</td>
+                    <td>${order.order_status}</td>
+                    <td>${order.total_price}</td>
+                    <td>${order.created_at.split('T')[0]}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+        } catch (error) {
+            console.error('Error fetching orders:', error.message);
+            alert('Unable to load customer orders.');
+        }
+    }
+    </script>
+
+</body>
+</html>
