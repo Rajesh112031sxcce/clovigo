@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Seller</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    
+
+    <h1>Seller Registration</h1>
+
+    <!-- Seller Registration Form -->
+    <form id="sellerRegistrationForm" enctype="multipart/form-data">
+        <label for="first_name">First Name:</label><br>
+        <input type="text" id="first_name" name="first_name" required><br><br>
+
+        <label for="last_name">Last Name:</label><br>
+        <input type="text" id="last_name" name="last_name" required><br><br>
+
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="phone_no">Phone Number:</label><br>
+        <input type="text" id="phone_no" name="phone_no" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="shop_name">Shop Name:</label><br>
+        <input type="text" id="shop_name" name="shop_name" required><br><br>
+
+        <label for="shop_address_1">Shop Address 1:</label><br>
+        <input type="text" id="shop_address_1" name="shop_address_1" required><br><br>
+
+        <label for="shop_address_2">Shop Address 2:</label><br>
+        <input type="text" id="shop_address_2" name="shop_address_2" required><br><br>
+
+        <label for="shop_landmark">Shop Landmark:</label><br>
+        <input type="text" id="shop_landmark" name="shop_landmark" required><br><br>
+
+        <label for="gst_no">GST No:</label><br>
+        <input type="text" id="gst_no" name="gst_no" required><br><br>
+
+        <label for="gst_expiry_date">GST Expiry Date:</label><br>
+        <input type="date" id="gst_expiry_date" name="gst_expiry_date" required><br><br>
+
+        <label for="pan_no">PAN No:</label><br>
+        <input type="text" id="pan_no" name="pan_no" required><br><br>
+
+        <label for="account_no">Account No:</label><br>
+        <input type="text" id="account_no" name="account_no" required><br><br>
+
+        <label for="file_gst">GST File:</label><br>
+        <input type="file" id="file_gst" name="file_gst" required><br><br>
+
+        <label for="file_pan">PAN File:</label><br>
+        <input type="file" id="file_pan" name="file_pan" required><br><br>
+
+        <button type="submit">Register Seller</button>
+    </form>
+
+    <div id="response"></div>
+
+    <!-- jQuery AJAX for form submission -->
+    <script>
+        $('#sellerRegistrationForm').on('submit', function(event) {
+            event.preventDefault();  // Prevent default form submission
+
+            const formData = new FormData();
+
+            // User details
+            formData.append("user.first_name", $('#first_name').val());
+            formData.append("user.last_name", $('#last_name').val());
+            formData.append("user.username", $('#username').val());
+            formData.append("user.email", $('#email').val());
+            formData.append("user.phone_no", $('#phone_no').val());
+            formData.append("user.password", $('#password').val());
+
+
+            // Shop details
+            formData.append("shop_name", $('#shop_name').val());
+            formData.append("shop_address_1", $('#shop_address_1').val());
+            formData.append("shop_address_2", $('#shop_address_2').val());
+            formData.append("shop_landmark", $('#shop_landmark').val());
+            formData.append("GST_no", $('#gst_no').val());
+            formData.append("GST_expiry_date", $('#gst_expiry_date').val());
+            formData.append("PAN_no", $('#pan_no').val());
+            formData.append("account_no", $('#account_no').val());
+
+            // Files
+            formData.append("file_gst", $('#file_gst')[0].files[0]);
+            formData.append("file_pan", $('#file_pan')[0].files[0]);
+
+            $.ajax({
+                url: 'http://127.0.0.1:8000/api/accounts/signup/seller/',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    alert("Signup successful! Please verify your OTP.");
+                    localStorage.setItem("username", $('#username').val());
+                    window.location.href = "otp.html";
+                },
+                error: function(xhr) {
+                    alert("Signup failed. Check console for details.");
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collecting Basket Animation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .basket-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .section {
+            width: 100px;
+            height: 150px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section h3 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .item {
+            font-size: 24px;
+            position: absolute;
+            animation: drop 2s ease-in-out infinite;
+        }
+
+        .fruit { color: #FF6347; }
+        .vegetable { color: #32CD32; }
+        .meat { color: #FFD700; }
+
+        @keyframes drop {
+            0% { top: -50px; }
+            100% { top: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="basket-container">
+    <div class="section" id="fruits">
+        <h3>Fruits</h3>
+        <div class="item fruit" style="left: 20px;"><i class="fa-solid fa-apple-whole"></i></div>
+        <div class="item fruit" style="left: 50px; animation-delay: 1s;"><i class="fa-solid fa-apple-whole"></i></div>
+    </div>
+
+    <div class="section" id="vegetables">
+        <h3>Vegetables</h3>
+        <div class="item vegetable" style="left: 20px;"><i class="fa-solid fa-carrot"></i></div>
+        <div class="item vegetable" style="left: 50px; animation-delay: 1s;"><i class="fa-solid fa-carrot"></i></div>
+    </div>
+
+    <div class="section" id="meat">
+        <h3>Meat</h3>
+        <div class="item meat" style="left: 20px;"><i class="fa-solid fa-drumstick-bite"></i></div>
+        <div class="item meat" style="left: 50px; animation-delay: 1s;"><i class="fa-solid fa-drumstick-bite"></i></div>
+    </div>
+</div>
+
+</body>
+</html>
