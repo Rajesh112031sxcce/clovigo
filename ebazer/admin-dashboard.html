@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from html.hixstudio.net/ebazer/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 12 May 2025 09:11:55 GMT -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+
+    <!-- css links -->
+    <link rel="stylesheet" href="assets/css/perfect-scrollbar.css">
+    <link rel="stylesheet" href="assets/css/choices.css">
+    <link rel="stylesheet" href="assets/css/apexcharts.css">
+    <link rel="stylesheet" href="assets/css/quill.css">
+    <link rel="stylesheet" href="assets/css/rangeslider.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <link href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="tp-main-wrapper bg-slate-100 h-screen" x-data="{ sideMenu: false }">
+        <aside
+            class="w-[300px] lg:w-[250px] xl:w-[300px] border-r border-gray overflow-y-scroll sidebar-scrollbar fixed left-0 top-0 h-full bg-white z-50 transition-transform duration-300"
+            :class="sideMenu ? 'translate-x-[0px]' : ' -translate-x-[300px] lg:translate-x-[0]'">
+            <div class="">
+                <div class="py-4 pb-8 px-8 border-b border-gray h-[78px]">
+                    <a href="index.html">
+                        <img class="w-[140px]" src="assets/img/logo/clovigo.png" alt="">
+                    </a>
+                </div>
+                <div class="px-4 py-5" x-data="{nav:null}">
+                    <ul>
+                        <li>
+                            <a @click="nav !== 0 ? nav = 0 : nav = null"
+                                :class="nav == 0 ? 'bg-themeLight hover:bg-themeLight text-theme' : ''"
+                                href="admin-dashboard.html"
+                                class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-2 hover:bg-gray sidebar-link-active">
+                                <span class="inline-block  mr-[10px] text-xl">
+                                    <svg class="-translate-y-[4px]" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor"
+                                            d="M7,0H4A4,4,0,0,0,0,4V7a4,4,0,0,0,4,4H7a4,4,0,0,0,4-4V4A4,4,0,0,0,7,0ZM9,7A2,2,0,0,1,7,9H4A2,2,0,0,1,2,7V4A2,2,0,0,1,4,2H7A2,2,0,0,1,9,4Z" />
+                                        <path fill="currentColor"
+                                            d="M20,0H17a4,4,0,0,0-4,4V7a4,4,0,0,0,4,4h3a4,4,0,0,0,4-4V4A4,4,0,0,0,20,0Zm2,7a2,2,0,0,1-2,2H17a2,2,0,0,1-2-2V4a2,2,0,0,1,2-2h3a2,2,0,0,1,2,2Z" />
+                                        <path fill="currentColor"
+                                            d="M7,13H4a4,4,0,0,0-4,4v3a4,4,0,0,0,4,4H7a4,4,0,0,0,4-4V17A4,4,0,0,0,7,13Zm2,7a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V17a2,2,0,0,1,2-2H7a2,2,0,0,1,2,2Z" />
+                                        <path fill="currentColor"
+                                            d="M20,13H17a4,4,0,0,0-4,4v3a4,4,0,0,0,4,4h3a4,4,0,0,0,4-4V17A4,4,0,0,0,20,13Zm2,7a2,2,0,0,1-2,2H17a2,2,0,0,1-2-2V17a2,2,0,0,1,2-2h3a2,2,0,0,1,2,2Z" />
+                                    </svg>
+                                </span>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a @click="nav !== 1 ? nav = 1 : nav = null"
+                                :class="nav == 1 ? 'bg-themeLight hover:bg-themeLight text-theme' : ''"
+                                href="admin-product.html"
+                                class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-3 hover:bg-gray sidebar-link-active">
+                                <span class="inline-block translate-y-[1px] mr-[10px] text-xl">
+                                    <svg class="-translate-y-[4px]" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor"
+                                            d="M23.621,6.836l-1.352-2.826c-.349-.73-.99-1.296-1.758-1.552L14.214,.359c-1.428-.476-3-.476-4.428,0L3.49,2.458c-.769,.256-1.41,.823-1.759,1.554L.445,6.719c-.477,.792-.567,1.742-.247,2.609,.309,.84,.964,1.49,1.802,1.796l-.005,6.314c-.002,2.158,1.372,4.066,3.418,4.748l4.365,1.455c.714,.238,1.464,.357,2.214,.357s1.5-.119,2.214-.357l4.369-1.457c2.043-.681,3.417-2.585,3.419-4.739l.005-6.32c.846-.297,1.508-.946,1.819-1.79,.317-.858,.228-1.799-.198-2.499ZM10.419,2.257c1.02-.34,2.143-.34,3.162,0l4.248,1.416-5.822,1.95-5.834-1.95,4.246-1.415ZM2.204,7.666l1.327-2.782c.048,.025,7.057,2.373,7.057,2.373l-1.621,3.258c-.239,.398-.735,.582-1.173,.434l-5.081-1.693c-.297-.099-.53-.325-.639-.619-.109-.294-.078-.616,.129-.97Zm3.841,12.623c-1.228-.409-2.052-1.554-2.051-2.848l.005-5.648,3.162,1.054c1.344,.448,2.792-.087,3.559-1.371l.278-.557-.005,10.981c-.197-.04-.391-.091-.581-.155l-4.366-1.455Zm11.897-.001l-4.37,1.457c-.19,.063-.384,.115-.581,.155l.005-10.995,.319,.64c.556,.928,1.532,1.459,2.561,1.459,.319,0,.643-.051,.96-.157l3.161-1.053-.005,5.651c0,1.292-.826,2.435-2.052,2.844Zm4-11.644c-.105,.285-.331,.504-.619,.6l-5.118,1.706c-.438,.147-.934-.035-1.136-.365l-1.655-3.323s7.006-2.351,7.054-2.377l1.393,2.901c.157,.261,.186,.574,.081,.859Z" />
+                                    </svg>
+                                </span>
+                                Products
+                            </a>
+                        </li>
+                        <li>
+                            <a @click="nav !== 2 ? nav = 2 : nav = null"
+                                :class="nav == 2 ? 'bg-themeLight hover:bg-themeLight text-theme' : ''"
+                                href="admin-order.html"
+                                class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-3 hover:bg-gray sidebar-link-active">
+                                <span class="inline-block translate-y-[1px] mr-[10px] text-xl">
+                                    <svg class="-translate-y-[4px]" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor"
+                                            d="m11.349,24H0V3C0,1.346,1.346,0,3,0h12c1.654,0,3,1.346,3,3v5.059c-.329-.036-.662-.059-1-.059s-.671.022-1,.059V3c0-.552-.448-1-1-1H3c-.552,0-1,.448-1,1v19h7.518c.506.756,1.125,1.429,1.831,2Zm0-14h-7.349v2h5.518c.506-.756,1.125-1.429,1.831-2Zm-7.349,7h4c0-.688.084-1.356.231-2h-4.231v2Zm20,0c0,3.859-3.141,7-7,7s-7-3.141-7-7,3.141-7,7-7,7,3.141,7,7Zm-2,0c0-2.757-2.243-5-5-5s-5,2.243-5,5,2.243,5,5,5,5-2.243,5-5ZM14,5H4v2h10v-2Zm5.589,9.692l-3.228,3.175-1.63-1.58-1.393,1.436,1.845,1.788c.314.315.733.489,1.179.489s.865-.174,1.173-.482l3.456-3.399-1.402-1.426Z" />
+                                    </svg>
+                                </span>
+                                Orders
+                            </a>
+                        </li>
+                        <li>
+                            <a @click="nav !== 3 ? nav = 3 : nav = null"
+                                :class="nav == 3 ? 'bg-themeLight hover:bg-themeLight text-theme' : ''"
+                                href="admin-seller.html"
+                                class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-3 hover:bg-gray sidebar-link-active">
+                                <span class="inline-block translate-y-[1px] mr-[10px] text-xl">
+                                    <svg class="-translate-y-[4px]" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor"
+                                            d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z" />
+                                    </svg>
+
+
+                                </span>
+                                Sellers
+                            </a>
+                        </li>
+                        <li>
+                            <a @click="nav !== 4 ? nav = 4 : nav = null"
+                                :class="nav == 4 ? 'bg-themeLight hover:bg-themeLight text-theme' : ''"
+                                href="admin-customer.html"
+                                class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-3 hover:bg-gray sidebar-link-active">
+                                <span class="inline-block translate-y-[1px] mr-[10px] text-xl">
+                                    <svg class="-translate-y-[4px]" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor"
+                                            d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" />
+                                    </svg>
+
+
+                                </span>
+                                Customer
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </aside>
+
+        <div class="fixed top-0 left-0 w-full h-full z-40 bg-black/70 transition-all duration-300"
+            :class="sideMenu ? 'visible opacity-1' : '  invisible opacity-0 '" x-on:click="sideMenu = ! sideMenu">
+        </div>
+
+        <div class="tp-main-content lg:ml-[250px] xl:ml-[300px] w-[calc(100% - 300px)]"
+            x-data="{ searchOverlay: false }">
+
+            <header class="relative z-10 bg-white border-b border-gray border-solid py-5 px-8 pr-8">
+                <div class="flex justify-between">
+                    <div class="flex items-center space-x-6 lg:space-x-0">
+                        <button type="button" class="block lg:hidden text-2xl text-black"
+                            x-on:click="sideMenu = ! sideMenu">
+                            <svg width="20" height="12" viewBox="0 0 20 12" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M1 6H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M1 11H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            </svg>
+                        </button>
+                    </div>
+
+
+                </div>
+
+
+            </header>
+
+            <div class="body-content px-8 py-8 bg-slate-100">
+                <div class="flex justify-between items-end flex-wrap">
+                    <div class="page-title mb-7">
+                        <h3 class="mb-0 text-4xl">Admin Dashboard</h3>
+                        <p class="text-textBody m-0">Welcome to admin dashboard</p>
+                    </div>
+
+                </div>
+
+                <!-- card -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
+                    <div class="widget-item bg-white p-6 flex justify-between rounded-md">
+                        <div>
+                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none" id="seller_count">0</h4>
+                            <p class="text-tiny leading-4">Total Sellers</p>
+
+                        </div>
+                        <div>
+                            <span
+                                class="text-lg text-white rounded-full flex items-center justify-center h-12 w-12 shrink-0 "
+                                style="background-color:#00e676;">
+                                <svg class="w-[34px] h-[34px] text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2"
+                                        d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="widget-item bg-white p-6 flex justify-between rounded-md">
+                        <div>
+                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none" id="customer_count">0
+                            </h4>
+                            <p class="text-tiny leading-4">Total Customers</p>
+
+                        </div>
+                        <div>
+                            <span
+                                class="text-lg text-white rounded-full flex items-center justify-center h-12 w-12 shrink-0 "
+                                style="background-color:#26c6da;">
+                                <svg class="w-[34px] h-[34px] text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                                        d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
+                                </svg>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="widget-item bg-white p-6 flex justify-between rounded-md">
+                        <div>
+                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none" id="delivery_boy_count">0
+                            </h4>
+                            <p class="text-tiny leading-4">Total Delivery Boys</p>
+
+                        </div>
+                        <div>
+                            <span
+                                class="text-lg text-white rounded-full flex items-center justify-center h-12 w-12 shrink-0 "
+                                style="background-color: #ffb74d;">
+                                <svg class="w-[34px] h-[34px] text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M13 7h6l2 4m-8-4v8H9m4-8V6c0-.26522-.1054-.51957-.2929-.70711C12.5196 5.10536 12.2652 5 12 5H4c-.26522 0-.51957.10536-.70711.29289C3.10536 5.48043 3 5.73478 3 6v9h2m14 0h2v-4m0 0h-5M8 8.66669V10l1.5 1.5m10 5c0 1.3807-1.1193 2.5-2.5 2.5s-2.5-1.1193-2.5-2.5S15.6193 14 17 14s2.5 1.1193 2.5 2.5Zm-10 0C9.5 17.8807 8.38071 19 7 19s-2.5-1.1193-2.5-2.5S5.61929 14 7 14s2.5 1.1193 2.5 2.5Z" />
+                                </svg>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="widget-item bg-white p-6 flex justify-between rounded-md">
+                        <div>
+                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none" id="product_count">0</h4>
+                            <p class="text-tiny leading-4">Total Products</p>
+
+                        </div>
+                        <div>
+                            <span
+                                class="text-lg text-white rounded-full flex items-center justify-center h-12 w-12 shrink-0 "
+                                style="background-color:#ef5350 ;">
+                                <svg class="w-[34px] h-[34px] text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
+                                        d="M10 12v1h4v-1m4 7H6a1 1 0 0 1-1-1V9h14v9a1 1 0 0 1-1 1ZM4 5h16a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
+                                </svg>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="widget-item bg-white p-6 flex justify-between rounded-md">
+                        <div>
+                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none" id="order_count">0</h4>
+                            <p class="text-tiny leading-4">Total Orders</p>
+
+                        </div>
+                        <div>
+                            <span
+                                class="text-lg text-white rounded-full flex items-center justify-center h-12 w-12 shrink-0 "
+                                style="background-color: #fdd835;">
+                                <svg class="w-[34px] h-[34px] text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M3 11.5h13m-13 0V18a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-6.5m-13 0V9a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v2.5M9 5h11a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-1" />
+                                </svg>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="widget-item bg-white p-6 flex justify-between rounded-md">
+                        <div>
+                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none" id="pending_order_count">
+                                0</h4>
+                            <p class="text-tiny leading-4">Pending Orders</p>
+
+                        </div>
+                        <div>
+                            <span
+                                class="text-lg text-white rounded-full flex items-center justify-center h-12 w-12 shrink-0 "
+                                style="background-color:#66bb6a ;">
+                                <svg class="w-[34px] h-[34px] text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 8v4l3 3M3.22302 14C4.13247 18.008 7.71683 21 12 21c4.9706 0 9-4.0294 9-9 0-4.97056-4.0294-9-9-9-3.72916 0-6.92858 2.26806-8.29409 5.5M7 9H3V5" />
+                                </svg>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="widget-item bg-white p-6 flex justify-between rounded-md">
+                        <div>
+                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none"
+                                id="completed_order_count">0</h4>
+                            <p class="text-tiny leading-4">Completed Orders</p>
+
+                        </div>
+                        <div>
+                            <span
+                                class="text-lg text-white rounded-full flex items-center justify-center h-12 w-12 shrink-0 "
+                                style="background-color:#7e57c2 ;">
+                                <svg class="w-[34px] h-[34px] text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="m8.032 12 1.984 1.984 4.96-4.96m4.55 5.272.893-.893a1.984 1.984 0 0 0 0-2.806l-.893-.893a1.984 1.984 0 0 1-.581-1.403V7.04a1.984 1.984 0 0 0-1.984-1.984h-1.262a1.983 1.983 0 0 1-1.403-.581l-.893-.893a1.984 1.984 0 0 0-2.806 0l-.893.893a1.984 1.984 0 0 1-1.403.581H7.04A1.984 1.984 0 0 0 5.055 7.04v1.262c0 .527-.209 1.031-.581 1.403l-.893.893a1.984 1.984 0 0 0 0 2.806l.893.893c.372.372.581.876.581 1.403v1.262a1.984 1.984 0 0 0 1.984 1.984h1.262c.527 0 1.031.209 1.403.581l.893.893a1.984 1.984 0 0 0 2.806 0l.893-.893a1.985 1.985 0 0 1 1.403-.581h1.262a1.984 1.984 0 0 0 1.984-1.984V15.7c0-.527.209-1.031.581-1.403Z" />
+                                </svg>
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="widget-item bg-white p-6 flex justify-between rounded-md">
+                        <div>
+                            <h4 class="text-xl font-semibold text-slate-700 mb-1 leading-none" id="completion_rate">0%
+                            </h4>
+                            <p class="text-tiny leading-4">Completion Rate</p>
+
+                        </div>
+                        <div>
+                            <span
+                                class="text-lg text-white rounded-full flex items-center justify-center h-12 w-12 shrink-0 bg-success">
+                                <svg class="w-[34px] h-[34px] text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M8.891 15.107 15.11 8.89m-5.183-.52h.01m3.089 7.254h.01M14.08 3.902a2.849 2.849 0 0 0 2.176.902 2.845 2.845 0 0 1 2.94 2.94 2.849 2.849 0 0 0 .901 2.176 2.847 2.847 0 0 1 0 4.16 2.848 2.848 0 0 0-.901 2.175 2.843 2.843 0 0 1-2.94 2.94 2.848 2.848 0 0 0-2.176.902 2.847 2.847 0 0 1-4.16 0 2.85 2.85 0 0 0-2.176-.902 2.845 2.845 0 0 1-2.94-2.94 2.848 2.848 0 0 0-.901-2.176 2.848 2.848 0 0 1 0-4.16 2.849 2.849 0 0 0 .901-2.176 2.845 2.845 0 0 1 2.941-2.94 2.849 2.849 0 0 0 2.176-.901 2.847 2.847 0 0 1 4.159 0Z" />
+                                </svg>
+
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="chart-main-wrapper mb-6 grid grid-cols-12 gap-6">
+                    <div class=" col-span-12 2xl:col-span-7">
+                        <div class="chart-single bg-white py-3 px-3 sm:py-10 sm:px-10 h-fit rounded-md">
+                            <h3 class="text-xl"> Dashboard Statistics</h3>
+                            <div class="h-full w-full"><canvas id="adminChart"></canvas></div>
+                        </div>
+                    </div>
+
+                    <div class="col-span-12 md:col-span-6 2xl:col-span-5 space-y-6">
+                        <div class="chart-widget bg-white p-4 sm:p-10 rounded-md">
+                            <h3 class="text-xl mb-8">Order Distribution</h3>
+                            <div class="md:h-[252px] 2xl:h-[398px] w-full"><canvas
+                                    class="mx-auto md:!w-[240px] md:!h-[240px] 2xl:!w-[360px] 2xl:!h-[360px] "
+                                    id="orderPieChart"></canvas></div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+        const dashboardCounts = {
+            sellers: 0,
+            customers: 0,
+            deliveryBoys: 0,
+            orders: 0,
+            pendingOrders: 0,
+            completedOrders: 0,
+            products: 0
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) return window.location.href = 'admin-login.html';
+            initDashboard(token);
+        });
+
+        async function initDashboard(token) {
+            try {
+                await Promise.all([
+                    fetchAndDisplay('sellers', 'seller_count', 'sellers', token),
+                    fetchAndDisplay('delivery-boys', 'delivery_boy_count', 'deliveryBoys', token),
+                    fetchAndDisplay('customers', 'customer_count', 'customers', token),
+                    fetchOrders(token),
+                    fetchProducts(token)
+                ]);
+                renderDashboardChart();
+                renderOrderPieChart();
+            } catch (error) {
+                console.error('Dashboard Init Error:', error);
+                alert('Unable to load dashboard data.');
+            }
+        }
+
+        async function fetchAndDisplay(endpoint, elementId, key, token) {
+            const res = await fetch(`http://127.0.0.1:8000/api/accounts/admin/${endpoint}/`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error(`Fetch failed: ${endpoint}`);
+            const data = await res.json();
+            const items = Object.values(data)[0] || [];
+            document.getElementById(elementId).textContent = items.length;
+            dashboardCounts[key] = items.length;
+        }
+
+        async function fetchOrders(token) {
+            const res = await fetch('http://127.0.0.1:8000/api/accounts/admin/orders/', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error('Orders fetch failed');
+            const data = await res.json();
+            const orders = data.orders || [];
+            const pending = orders.filter(o => o.order_status === 'P').length;
+            const completed = orders.filter(o => o.order_status === 'C').length;
+
+            document.getElementById('order_count').textContent = orders.length;
+            document.getElementById('pending_order_count').textContent = pending;
+            document.getElementById('completed_order_count').textContent = completed;
+
+            dashboardCounts.orders = orders.length;
+            dashboardCounts.pendingOrders = pending;
+            dashboardCounts.completedOrders = completed;
+
+            const completionRate = ((completed / orders.length) * 100).toFixed(2);
+            document.getElementById('completion_rate').textContent = `${completionRate}%`;
+        }
+
+        async function fetchProducts(token) {
+            const res = await fetch('http://127.0.0.1:8000/api/accounts/admin-product-dashboard/', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error('Product fetch failed');
+            const data = await res.json();
+            const products = data.products || [];
+            document.getElementById('product_count').textContent = products.length;
+            dashboardCounts.products = products.length;
+        }
+
+        function renderDashboardChart() {
+            const ctx = document.getElementById('adminChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Sellers', 'Customers', 'Delivery Boys', 'Orders', 'Pending Orders', 'Completed Orders', 'Products'],
+                    datasets: [{
+                        label: 'Total Count',
+                        data: [
+                            dashboardCounts.sellers,
+                            dashboardCounts.customers,
+                            dashboardCounts.deliveryBoys,
+                            dashboardCounts.orders,
+                            dashboardCounts.pendingOrders,
+                            dashboardCounts.completedOrders,
+                            dashboardCounts.products
+                        ],
+                        backgroundColor: [
+                            '#00e676', '#26c6da', '#ffb74d', '#ef5350',
+                            '#fdd835', '#66bb6a', '#7e57c2'
+                        ],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+
+                            color: '#00e676',
+                            font: { size: 18, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#e0f2f1' },
+                            grid: { color: '#333' }
+                        },
+                        x: {
+                            ticks: { color: '#e0f2f1' },
+                            grid: { color: '#333' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderOrderPieChart() {
+            const ctx = document.getElementById('orderPieChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Pending Orders', 'Completed Orders'],
+                    datasets: [{
+                        label: 'Order Status',
+                        data: [
+                            dashboardCounts.pendingOrders,
+                            dashboardCounts.completedOrders
+                        ],
+                        backgroundColor: ['#ffb74d', '#66bb6a']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+
+                            color: '#00e676',
+                            font: { size: 18, weight: 'bold' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function logout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            alert("You have been logged out.");
+            window.location.href = "admin-login.html";
+        }
+
+    </script>
+    <script src="assets/js/alpine.js"></script>
+    <script src="assets/js/perfect-scrollbar.js"></script>
+    <script src="assets/js/choices.js"></script>
+    <script src="assets/js/chart.js"></script>
+    <script src="assets/js/apexchart.js"></script>
+    <script src="assets/js/quill.js"></script>
+    <script src="assets/js/rangeslider.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+<!-- Mirrored from html.hixstudio.net/ebazer/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 12 May 2025 09:12:16 GMT -->
+
+</html>

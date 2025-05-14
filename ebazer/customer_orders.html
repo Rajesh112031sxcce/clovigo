@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from html.hixstudio.net/ebazer/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 12 May 2025 09:11:55 GMT -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon">
+
+    <!-- css links -->
+    <link rel="stylesheet" href="assets/css/perfect-scrollbar.css">
+    <link rel="stylesheet" href="assets/css/choices.css">
+    <link rel="stylesheet" href="assets/css/apexcharts.css">
+    <link rel="stylesheet" href="assets/css/quill.css">
+    <link rel="stylesheet" href="assets/css/rangeslider.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <link href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="tp-main-wrapper bg-slate-100 h-screen" x-data="{ sideMenu: false }">
+        <aside
+            class="w-[300px] lg:w-[250px] xl:w-[300px] border-r border-gray overflow-y-scroll sidebar-scrollbar fixed left-0 top-0 h-full bg-white z-50 transition-transform duration-300"
+            :class="sideMenu ? 'translate-x-[0px]' : ' -translate-x-[300px] lg:translate-x-[0]'">
+            <div class="">
+                <div class="py-4 pb-8 px-8 border-b border-gray h-[78px]">
+                    <a href="index.html">
+                        <img class="w-[140px]" src="assets/img/logo/clovigo.png" alt="">
+                    </a>
+                </div>
+                <div class="px-4 py-5" x-data="{nav:null}">
+                    <ul>
+                        <li>
+                            <a @click="nav !== 0 ? nav = 0 : nav = null"
+                                :class="nav == 0 ? 'bg-themeLight hover:bg-themeLight text-theme' : ''"
+                                href="admin-dashboard.html"
+                                class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-2 hover:bg-gray sidebar-link-active">
+                                <span class="inline-block  mr-[10px] text-xl">
+                                    <svg class="-translate-y-[4px]" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor"
+                                            d="M7,0H4A4,4,0,0,0,0,4V7a4,4,0,0,0,4,4H7a4,4,0,0,0,4-4V4A4,4,0,0,0,7,0ZM9,7A2,2,0,0,1,7,9H4A2,2,0,0,1,2,7V4A2,2,0,0,1,4,2H7A2,2,0,0,1,9,4Z" />
+                                        <path fill="currentColor"
+                                            d="M20,0H17a4,4,0,0,0-4,4V7a4,4,0,0,0,4,4h3a4,4,0,0,0,4-4V4A4,4,0,0,0,20,0Zm2,7a2,2,0,0,1-2,2H17a2,2,0,0,1-2-2V4a2,2,0,0,1,2-2h3a2,2,0,0,1,2,2Z" />
+                                        <path fill="currentColor"
+                                            d="M7,13H4a4,4,0,0,0-4,4v3a4,4,0,0,0,4,4H7a4,4,0,0,0,4-4V17A4,4,0,0,0,7,13Zm2,7a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V17a2,2,0,0,1,2-2H7a2,2,0,0,1,2,2Z" />
+                                        <path fill="currentColor"
+                                            d="M20,13H17a4,4,0,0,0-4,4v3a4,4,0,0,0,4,4h3a4,4,0,0,0,4-4V17A4,4,0,0,0,20,13Zm2,7a2,2,0,0,1-2,2H17a2,2,0,0,1-2-2V17a2,2,0,0,1,2-2h3a2,2,0,0,1,2,2Z" />
+                                    </svg>
+                                </span>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a @click="nav !== 1 ? nav = 1 : nav = null"
+                                :class="nav == 1 ? 'bg-themeLight hover:bg-themeLight text-theme' : ''"
+                                href="admin-product.html"
+                                class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-3 hover:bg-gray sidebar-link-active">
+                                <span class="inline-block translate-y-[1px] mr-[10px] text-xl">
+                                    <svg class="-translate-y-[4px]" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor"
+                                            d="M23.621,6.836l-1.352-2.826c-.349-.73-.99-1.296-1.758-1.552L14.214,.359c-1.428-.476-3-.476-4.428,0L3.49,2.458c-.769,.256-1.41,.823-1.759,1.554L.445,6.719c-.477,.792-.567,1.742-.247,2.609,.309,.84,.964,1.49,1.802,1.796l-.005,6.314c-.002,2.158,1.372,4.066,3.418,4.748l4.365,1.455c.714,.238,1.464,.357,2.214,.357s1.5-.119,2.214-.357l4.369-1.457c2.043-.681,3.417-2.585,3.419-4.739l.005-6.32c.846-.297,1.508-.946,1.819-1.79,.317-.858,.228-1.799-.198-2.499ZM10.419,2.257c1.02-.34,2.143-.34,3.162,0l4.248,1.416-5.822,1.95-5.834-1.95,4.246-1.415ZM2.204,7.666l1.327-2.782c.048,.025,7.057,2.373,7.057,2.373l-1.621,3.258c-.239,.398-.735,.582-1.173,.434l-5.081-1.693c-.297-.099-.53-.325-.639-.619-.109-.294-.078-.616,.129-.97Zm3.841,12.623c-1.228-.409-2.052-1.554-2.051-2.848l.005-5.648,3.162,1.054c1.344,.448,2.792-.087,3.559-1.371l.278-.557-.005,10.981c-.197-.04-.391-.091-.581-.155l-4.366-1.455Zm11.897-.001l-4.37,1.457c-.19,.063-.384,.115-.581,.155l.005-10.995,.319,.64c.556,.928,1.532,1.459,2.561,1.459,.319,0,.643-.051,.96-.157l3.161-1.053-.005,5.651c0,1.292-.826,2.435-2.052,2.844Zm4-11.644c-.105,.285-.331,.504-.619,.6l-5.118,1.706c-.438,.147-.934-.035-1.136-.365l-1.655-3.323s7.006-2.351,7.054-2.377l1.393,2.901c.157,.261,.186,.574,.081,.859Z" />
+                                    </svg>
+                                </span>
+                                Products
+                            </a>
+                        </li>
+                        <li>
+                            <a @click="nav !== 2 ? nav = 2 : nav = null"
+                                :class="nav == 2 ? 'bg-themeLight hover:bg-themeLight text-theme' : ''"
+                                href="admin-order.html"
+                                class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-3 hover:bg-gray sidebar-link-active">
+                                <span class="inline-block translate-y-[1px] mr-[10px] text-xl">
+                                    <svg class="-translate-y-[4px]" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor"
+                                            d="m11.349,24H0V3C0,1.346,1.346,0,3,0h12c1.654,0,3,1.346,3,3v5.059c-.329-.036-.662-.059-1-.059s-.671.022-1,.059V3c0-.552-.448-1-1-1H3c-.552,0-1,.448-1,1v19h7.518c.506.756,1.125,1.429,1.831,2Zm0-14h-7.349v2h5.518c.506-.756,1.125-1.429,1.831-2Zm-7.349,7h4c0-.688.084-1.356.231-2h-4.231v2Zm20,0c0,3.859-3.141,7-7,7s-7-3.141-7-7,3.141-7,7-7,7,3.141,7,7Zm-2,0c0-2.757-2.243-5-5-5s-5,2.243-5,5,2.243,5,5,5,5-2.243,5-5ZM14,5H4v2h10v-2Zm5.589,9.692l-3.228,3.175-1.63-1.58-1.393,1.436,1.845,1.788c.314.315.733.489,1.179.489s.865-.174,1.173-.482l3.456-3.399-1.402-1.426Z" />
+                                    </svg>
+                                </span>
+                                Orders
+                            </a>
+                        </li>
+                        <li>
+                            <a @click="nav !== 3 ? nav = 3 : nav = null"
+                                :class="nav == 3 ? 'bg-themeLight hover:bg-themeLight text-theme' : ''"
+                                href="admin-seller.html"
+                                class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-3 hover:bg-gray sidebar-link-active">
+                                <span class="inline-block translate-y-[1px] mr-[10px] text-xl">
+                                    <svg class="-translate-y-[4px]" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor"
+                                            d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z" />
+                                    </svg>
+
+
+                                </span>
+                                Sellers
+                            </a>
+                        </li>
+                        <li>
+                            <a @click="nav !== 4 ? nav = 4 : nav = null"
+                                :class="nav == 4 ? 'bg-themeLight hover:bg-themeLight text-theme' : ''"
+                                href="admin-customer.html"
+                                class="group rounded-md relative text-black text-lg font-medium inline-flex items-center w-full transition-colors ease-in-out duration-300 px-5 py-[9px] mb-3 hover:bg-gray sidebar-link-active">
+                                <span class="inline-block translate-y-[1px] mr-[10px] text-xl">
+                                    <svg class="-translate-y-[4px]" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" width="16" height="16">
+                                        <path fill="currentColor"
+                                            d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" />
+                                    </svg>
+
+
+                                </span>
+                                Customer
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </aside>
+
+        <div class="fixed top-0 left-0 w-full h-full z-40 bg-black/70 transition-all duration-300"
+            :class="sideMenu ? 'visible opacity-1' : '  invisible opacity-0 '" x-on:click="sideMenu = ! sideMenu">
+        </div>
+
+        <div class="tp-main-content lg:ml-[250px] xl:ml-[300px] w-[calc(100% - 300px)]"
+            x-data="{ searchOverlay: false }">
+
+            <header class="relative z-10 bg-white border-b border-gray border-solid py-5 px-8 pr-8">
+                <div class="flex justify-between">
+                    <div class="flex items-center space-x-6 lg:space-x-0">
+                        <button type="button" class="block lg:hidden text-2xl text-black"
+                            x-on:click="sideMenu = ! sideMenu">
+                            <svg width="20" height="12" viewBox="0 0 20 12" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M1 6H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M1 11H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            </svg>
+                        </button>
+                    </div>
+
+
+                </div>
+
+
+            </header>
+
+            <div class="body-content px-8 py-8 bg-slate-100">
+                <div class="flex justify-between mb-10">
+                    <div class="page-title">
+                        <h3 class="mb-0 text-[28px]">Customer</h3>
+                        <ul class="text-tiny font-medium flex items-center space-x-3 text-text3">
+                            <li class="breadcrumb-item text-muted">
+                                <a href="product-list.html" class="text-hover-primary"> Home</a>
+                            </li>
+                            <li class="breadcrumb-item flex items-center">
+                                <span class="inline-block bg-text3/60 w-[4px] h-[4px] rounded-full"></span>
+                            </li>
+                            <li class="breadcrumb-item text-muted">Customer List</li>
+                            <li class="breadcrumb-item flex items-center">
+                                <span class="inline-block bg-text3/60 w-[4px] h-[4px] rounded-full"></span>
+                            </li>
+                            <li class="breadcrumb-item text-muted"> <span id="sellerIdDisplay">Loading...</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- table -->
+                <div class="bg-white rounded-t-md rounded-b-md shadow-xs py-4">
+                    <div class="tp-search-box flex items-center justify-between px-8 py-8">
+                        <div class="search-input relative">
+                            <input class="input h-[44px] w-full pl-14" type="text" id="productSearch"
+                                placeholder="Search prodect...">
+                            <button class="absolute top-1/2 left-5 translate-y-[-50%] hover:text-theme">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                    <path d="M18.9999 19L14.6499 14.65" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative overflow-x-auto  mx-8">
+                        <table class="w-full text-base text-left text-gray-500" id="products_table">
+
+                            <thead class="bg-white">
+                                <tr class="border-b border-gray6 text-tiny">
+                                    <th scope="col"
+                                        class="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end">
+                                        >Order ID</th>
+                                    <th scope="col"
+                                        class="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end">
+                                        >Product</th>
+                                    <th scope="col"
+                                        class="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end">
+                                        >Actual Price</th>
+                                    <th scope="col"
+                                        class="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end">
+                                        >Discount Price</th>
+                                    <th scope="col"
+                                        class="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end">
+                                        >Quantity</th>
+                                    <th scope="col"
+                                        class="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end">
+                                        >Status</th>
+                                    <th scope="col"
+                                        class="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end">
+                                        >Total</th>
+                                    <th scope="col"
+                                        class="px-3 py-3 text-tiny text-text2 uppercase font-semibold w-[170px] text-end">
+                                        >Date</th>
+
+
+
+
+
+
+
+                                </tr>
+                            </thead>
+                            <tbody id="orderTableBody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="flex justify-between items-center flex-wrap mx-8">
+                        <p class="mb-0 text-tiny" id="paginationInfo">Showing 0 of 0 orders</p>
+                        <div class="pagination py-3 flex justify-end items-center  mx-8">
+                            <a href="#"
+                                class="inline-block rounded-md w-10 h-10 text-center leading-[33px] border border-gray mr-2 last:mr-0 hover:bg-theme hover:text-white hover:border-theme"
+                                id="prevPage">
+                                <svg class="-translate-y-[2px] -translate-x-px" width="12" height="12"
+                                    viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M11.9209 1.50495C11.9206 1.90264 11.7623 2.28392 11.4809 2.56495L3.80895 10.237C3.57673 10.4691 3.39252 10.7447 3.26684 11.0481C3.14117 11.3515 3.07648 11.6766 3.07648 12.005C3.07648 12.3333 3.14117 12.6585 3.26684 12.9618C3.39252 13.2652 3.57673 13.5408 3.80895 13.773L11.4709 21.435C11.7442 21.7179 11.8954 22.0968 11.892 22.4901C11.8885 22.8834 11.7308 23.2596 11.4527 23.5377C11.1746 23.8158 10.7983 23.9735 10.405 23.977C10.0118 23.9804 9.63285 23.8292 9.34995 23.556L1.68795 15.9C0.657711 14.8677 0.0791016 13.4689 0.0791016 12.0105C0.0791016 10.552 0.657711 9.15322 1.68795 8.12095L9.35995 0.443953C9.56973 0.234037 9.83706 0.0910666 10.1281 0.0331324C10.4192 -0.0248017 10.7209 0.00490445 10.9951 0.118492C11.2692 0.232079 11.5036 0.424443 11.6684 0.671242C11.8332 0.918041 11.9211 1.20818 11.9209 1.50495Z"
+                                        fill="currentColor" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="inline-block rounded-md w-10 h-10 text-center leading-[33px] border border-gray mr-2 last:mr-0 hover:bg-theme hover:text-white hover:border-theme"
+                                id="nextPage">
+                                <svg class="-translate-y-px" width="12" height="12" viewBox="0 0 12 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M0.0790405 22.5C0.0793906 22.1023 0.237656 21.7211 0.519041 21.44L8.19104 13.768C8.42326 13.5359 8.60747 13.2602 8.73314 12.9569C8.85882 12.6535 8.92351 12.3284 8.92351 12C8.92351 11.6717 8.85882 11.3465 8.73314 11.0432C8.60747 10.7398 8.42326 10.4642 8.19104 10.232L0.52904 2.56502C0.255803 2.28211 0.104612 1.90321 0.108029 1.50992C0.111447 1.11662 0.269201 0.740401 0.547313 0.462289C0.825425 0.184177 1.20164 0.0264236 1.59494 0.0230059C1.98823 0.0195883 2.36714 0.17078 2.65004 0.444017L10.312 8.10502C11.3423 9.13728 11.9209 10.5361 11.9209 11.9945C11.9209 13.4529 11.3423 14.8518 10.312 15.884L2.64004 23.556C2.43056 23.7656 2.16368 23.9085 1.87309 23.9666C1.58249 24.0247 1.2812 23.9954 1.00723 23.8824C0.733259 23.7695 0.498891 23.5779 0.333699 23.3319C0.168506 23.0858 0.0798928 22.7964 0.0790405 22.5Z"
+                                        fill="currentColor" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let allOrders = [];
+        let filteredOrders = [];
+        let currentPage = 1;
+        const ordersPerPage = 10;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'admin_login.html';
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const customerId = urlParams.get('customer_id');
+
+            if (!customerId) {
+                alert('Customer ID not found.');
+                return;
+            }
+
+            // Display Customer ID
+            const customerIdElement = document.getElementById('sellerIdDisplay');
+            if (customerIdElement) {
+                customerIdElement.textContent = customerId;
+            }
+
+            fetchCustomerOrders(customerId, token);
+
+            // Pagination controls
+            document.getElementById("prevPage")?.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderOrders();
+                }
+            });
+
+            document.getElementById("nextPage")?.addEventListener("click", () => {
+                if (currentPage * ordersPerPage < filteredOrders.length) {
+                    currentPage++;
+                    renderOrders();
+                }
+            });
+
+            // Search input
+            document.getElementById("productSearch")?.addEventListener("input", (e) => {
+                const keyword = e.target.value.toLowerCase();
+                filteredOrders = allOrders.filter(order =>
+                    (order.product?.product_name || '').toLowerCase().includes(keyword) ||
+                    (order.product?.product_category || '').toLowerCase().includes(keyword) ||
+                    (order.product?.description || '').toLowerCase().includes(keyword)
+                );
+                currentPage = 1;
+                renderOrders();
+            });
+        });
+
+        const fetchCustomerOrders = async (customerId, token) => {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/accounts/admin/orders/customer/${customerId}/`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch customer orders');
+                }
+
+                const data = await response.json();
+                allOrders = Array.isArray(data) ? data : [];
+                filteredOrders = [...allOrders];
+                renderOrders();
+            } catch (error) {
+                console.error('Error fetching customer orders:', error.message);
+                alert('Unable to load customer orders.');
+            }
+        };
+
+        const renderOrders = () => {
+            const startIndex = (currentPage - 1) * ordersPerPage;
+            const endIndex = startIndex + ordersPerPage;
+            const ordersToDisplay = filteredOrders.slice(startIndex, endIndex);
+
+            const tableBody = document.querySelector('#products_table tbody');
+            if (!tableBody) return;
+
+            if (ordersToDisplay.length > 0) {
+                tableBody.innerHTML = ordersToDisplay.map(renderOrderRow).join('');
+            } else {
+                tableBody.innerHTML = `<tr><td colspan="12" class="text-center">No orders found for this customer.</td></tr>`;
+            }
+
+            const total = filteredOrders.length;
+            document.getElementById("paginationInfo").textContent =
+                `Showing ${Math.min(startIndex + 1, total)} to ${Math.min(endIndex, total)} of ${total} orders`;
+
+            // Pagination button state
+            const prevBtn = document.getElementById("prevPage");
+            const nextBtn = document.getElementById("nextPage");
+            if (prevBtn && nextBtn) {
+                prevBtn.style.pointerEvents = currentPage === 1 ? 'none' : 'auto';
+                prevBtn.style.opacity = currentPage === 1 ? '0.5' : '1';
+                nextBtn.style.pointerEvents = currentPage * ordersPerPage >= total ? 'none' : 'auto';
+                nextBtn.style.opacity = currentPage * ordersPerPage >= total ? '0.5' : '1';
+            }
+        };
+
+        const renderOrderRow = (order) => {
+            const product = order.product || {};
+            return `
+            <tr class="bg-white border-b border-gray6 last:border-0 text-start mx-9">
+                <td class="px-3 py-3 font-normal text-[#55585B] text-end">${order.id}</td>
+                <td class="px-3 py-3 font-normal text-[#55585B] text-end">${product.product_name || '-'}</td>
+                <td class="px-3 py-3 font-normal text-[#55585B] text-end">${product.actual_price || '-'}</td>
+                <td class="px-3 py-3 font-normal text-[#55585B] text-end">${product.discount_price || '-'}</td>
+                <td class="px-3 py-3 font-normal text-[#55585B] text-end">${order.quantity}</td>
+                <td class="px-3 py-3 font-normal text-[#55585B] text-end">${order.order_status}</td>
+                <td class="px-3 py-3 font-normal text-[#55585B] text-end">${order.total_price}</td>
+                <td class="px-3 py-3 font-normal text-[#55585B] text-end">${order.created_at?.split('T')[0] || '-'}</td>
+            </tr>
+        `;
+        };
+    </script>
+
+
+
+    <script src="assets/js/alpine.js"></script>
+    <script src="assets/js/perfect-scrollbar.js"></script>
+    <script src="assets/js/choices.js"></script>
+    <script src="assets/js/chart.js"></script>
+    <script src="assets/js/apexchart.js"></script>
+    <script src="assets/js/quill.js"></script>
+    <script src="assets/js/rangeslider.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+<!-- Mirrored from html.hixstudio.net/ebazer/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 12 May 2025 09:12:16 GMT -->
+
+</html>
