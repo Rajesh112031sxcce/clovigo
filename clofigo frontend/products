@@ -1,0 +1,13 @@
+  productList.on("click", ".product-item", function () {
+        const productId = $(this).data("id");
+        
+        if (productId) {
+          // Redirect to single_product_view.html with product ID as a query parameter
+          window.location.href = `single_product_view.html?id=${productId}`;
+        }
+      });
+    })
+    .catch(err => {
+      console.error("Error loading products:", err);
+    });
+});
